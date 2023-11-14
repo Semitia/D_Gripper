@@ -1,4 +1,6 @@
-#include<SCoop.h>
+#include <SCoop.h>
+#include "AngleSensor.h"
+#include "N20.h"
 
 #define MAX_POSITION 2600
 const int LED_pin=13;
@@ -176,32 +178,6 @@ uint16_t Motor::get_position(void)
   return position;
 }
 
-class Angle_sensor{
-  private:
-    int pin;
-    float angle;
-    float angle_bias;
-  public:
-    Angle_sensor() {}
-    Angle_sensor(int ADC_pin){
-      pin = ADC_pin;
-    }
-    float get_angle(void);
-    void set_bias(float input_bias);
-};
-
-float Angle_sensor::get_angle(void)
-{
-  angle = analogRead(pin)*360.0/1024;
-  return angle;
-}
-
-void Angle_sensor::set_bias(float input_bias)
-{
-  angle_bias = input_bias;
-  return;
-}
-
 Motor M[3] = {
   Motor(motor_A1[0],motor_A2[0],motor_B1[0],motor_B2[0]),
   Motor(motor_A1[1],motor_A2[1],motor_B1[1],motor_B2[1]),
@@ -235,7 +211,7 @@ defineTaskLoop(info_Task){
     //print angle
     Serial.print("angle: ");
     for(int i=0;i<3;i++){
-      Serial.print(AS[i].get_angle());
+      Serial.print(AS[i].);
       Serial.print(" ");
     }
     Serial.println();
@@ -349,7 +325,7 @@ void buf_process(uint8_t *buf)
       break;
     case 0x07:
       Serial.println(" read angle");
-      Serial.println(AS[ID].get_angle());
+      Serial.println(AS[ID].updateAngle(analogRead(ADC_pin[ID])));
       break;
     default:
       Serial.println(" error cmd type");
