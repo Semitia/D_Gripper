@@ -54,12 +54,12 @@ class N20
         N20(int IN1, int IN2, int C1, int C2);
         N20(int IN1, int IN2, int C1, int C2, double gear_ratio, double encoder_ratio);
         ~N20();
-        void update(int d_cnt, double ts);
-        void update(int vol1, int vol2, double ts);
+        void update(double ts);
+        void updateISR(int vol1, int vol2);
         void setOmg(double omg);
         double getOmg(void);
         double getAngle(void);
-
+        int getCnt(void);
 };      
 
 N20 ::N20(int IN1, int IN2, int C1, int C2)
@@ -68,6 +68,7 @@ N20 ::N20(int IN1, int IN2, int C1, int C2)
     this->IN2 = IN2;
     this->C1 = C1;
     this->C2 = C2;
+    this->T = T;
     this->gear_ratio = 150;
     this->encoder_ratio = 2*PI/98;
 }
@@ -78,6 +79,7 @@ N20 ::N20(int IN1, int IN2, int C1, int C2, double gear_ratio, double encoder_ra
     this->IN2 = IN2;
     this->C1 = C1;
     this->C2 = C2;
+    this->T = T;
     this->gear_ratio = gear_ratio;
     this->encoder_ratio = encoder_ratio;
 }
@@ -87,15 +89,15 @@ N20 ::~N20()
 }
 
 /**
- * @brief 通过周期来更新电机状态，避免在中断中频繁更新
- * @param d_cnt 编码器计数差值
+ * @brief 通过周期来更新电机状态，避免在中断中频繁更新太多数据
+ *        cnt在中断中更新
  * @param ts    更新的时间戳
 */
-void N20::update(int d_cnt, double ts) {
-    cnt += d_cnt;
+void N20::update(double ts) {
+    int d_cnt = cnt - last_cnt;
     double dt = ts - last_ts;
-    omg = d_cnt * encoder_ratio / dt;
-    angle_accumu += d_cnt * encoder_ratio/ gear_ratio;
+    omg = d_cnt * encoder_ratio / (gear_ratio * dt);
+    angle_accumu += omg * dt;
     angle = angleNormalize(angle_accumu);
     last_cnt = cnt;
     last_ts = ts;
@@ -104,26 +106,22 @@ void N20::update(int d_cnt, double ts) {
 
 /**
  * @brief 通过编码器电平更新电机状态，
- *        这个应当被放在输入引脚的中断函数中，但是显然不应该如此频繁的更新电机状态
+ *        这个应当被放在输入引脚的中断函数中
  * @param vol1 编码器C1电平
  * @param vol2 编码器C2电平
- * @param ts   更新的时间戳
 */
-void N20::update(int vol1, int vol2, double ts) {
+void N20::updateISR(int vol1, int vol2) {
     if(vol1 == vol2) {      // 电机正转
         cnt++;
     } else {
         cnt--;              // 电机反转
     }
-    double dt = ts - last_ts;
-    omg = encoder_ratio / dt;
-    angle_accumu += encoder_ratio/ gear_ratio;
-    angle = angleNormalize(angle_accumu);
-    last_cnt = cnt;
-    last_ts = ts;
     return;
 }
 
+int N20:: getCnt(void) {
+    return cnt;
+}
 
 #endif
 
