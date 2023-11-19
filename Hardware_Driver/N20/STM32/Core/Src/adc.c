@@ -19,25 +19,12 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "adc.h"
-
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
 ADC_HandleTypeDef hadc1;
 uint16_t adc_value1, adc_value2, adc_value3;
 /* ADC1 init function */
 void MX_ADC1_Init(void)
 {
-  /* USER CODE BEGIN ADC1_Init 0 */
-
-  /* USER CODE END ADC1_Init 0 */
-
   ADC_ChannelConfTypeDef sConfig = {0};
-
-  /* USER CODE BEGIN ADC1_Init 1 */
-
-  /* USER CODE END ADC1_Init 1 */
 
   /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
   */

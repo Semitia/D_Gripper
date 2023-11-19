@@ -34,6 +34,7 @@ stm32\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 stm32\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 stm32\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 stm32\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+stm32\main.o: ../Drivers/CMSIS/Include/core_cm4.h
 stm32\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 stm32\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 stm32\main.o: ../Core/Inc/FreeRTOSConfig.h
@@ -48,4 +49,7 @@ stm32\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2
 stm32\main.o: ../Core/Inc/adc.h
 stm32\main.o: ../Core/Inc/tim.h
 stm32\main.o: ../Core/Inc/usart.h
+stm32\main.o: D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+stm32\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+stm32\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 stm32\main.o: ../Core/Inc/gpio.h

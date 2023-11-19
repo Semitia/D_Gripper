@@ -20,10 +20,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "tim.h"
 
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
@@ -560,6 +556,3 @@ void HAL_TIM_Encoder_MspDeInit(TIM_HandleTypeDef* tim_encoderHandle)
   }
 }
 
-/* USER CODE BEGIN 1 */
-
-/* USER CODE END 1 */

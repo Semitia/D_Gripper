@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "myiic.h": "c",
+        "freertos.h": "c",
+        "main.h": "c",
+        "as5600.h": "c",
+        "freertosconfig.h": "c",
+        "lowpass.h": "c",
+        "pid.h": "c",
+        "test.h": "c",
+        "foc.h": "c",
+        "usart.h": "c",
+        "tim.h": "c"
+    }
+}

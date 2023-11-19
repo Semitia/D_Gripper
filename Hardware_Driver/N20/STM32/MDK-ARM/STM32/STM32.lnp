@@ -9,6 +9,7 @@
 "stm32\stm32f4xx_it.o"
 "stm32\stm32f4xx_hal_msp.o"
 "stm32\stm32f4xx_hal_timebase_tim.o"
+"stm32\delay.o"
 "stm32\stm32f4xx_hal_adc.o"
 "stm32\stm32f4xx_hal_adc_ex.o"
 "stm32\stm32f4xx_ll_adc.o"
@@ -39,6 +40,10 @@
 "stm32\cmsis_os2.o"
 "stm32\heap_4.o"
 "stm32\port.o"
+"stm32\test.o"
+"stm32\pid.o"
+"stm32\datascope_dp.o"
+"stm32\dma_1.o"
 --strict --scatter "STM32\STM32.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
