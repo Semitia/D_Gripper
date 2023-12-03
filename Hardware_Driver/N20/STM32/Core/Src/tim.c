@@ -69,7 +69,7 @@ void MX_TIM1_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 500;
+  sConfigOC.Pulse = 300;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
@@ -94,27 +94,19 @@ void MX_TIM1_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN TIM1_Init 2 */
-
-  /* USER CODE END TIM1_Init 2 */
   HAL_TIM_MspPostInit(&htim1);
-
+	
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);														/* 定时器，启动！*/
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
 }
+
 /* TIM2 init function */
 void MX_TIM2_Init(void)
 {
-
-  /* USER CODE BEGIN TIM2_Init 0 */
-
-  /* USER CODE END TIM2_Init 0 */
-
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
 
-  /* USER CODE BEGIN TIM2_Init 1 */
-
-  /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 7;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -160,26 +152,19 @@ void MX_TIM2_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN TIM2_Init 2 */
-
-  /* USER CODE END TIM2_Init 2 */
   HAL_TIM_MspPostInit(&htim2);
-
+	
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);														/* 定时器，启动！*/
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
 }
 /* TIM3 init function */
 void MX_TIM3_Init(void)
 {
-
-  /* USER CODE BEGIN TIM3_Init 0 */
-
-  /* USER CODE END TIM3_Init 0 */
-
   TIM_Encoder_InitTypeDef sConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
 
-  /* USER CODE BEGIN TIM3_Init 1 */
-
-  /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 0;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -208,7 +193,6 @@ void MX_TIM3_Init(void)
   /* USER CODE BEGIN TIM3_Init 2 */
 
   /* USER CODE END TIM3_Init 2 */
-
 }
 /* TIM4 init function */
 void MX_TIM4_Init(void)

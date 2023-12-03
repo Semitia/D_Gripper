@@ -1,5 +1,5 @@
-stm32\delay.o: ..\Drivers\BSP\delay.c
-stm32\delay.o: ..\Drivers\BSP\delay.h
+stm32\delay.o: ..\Core\Src\delay.c
+stm32\delay.o: ../Core/Inc/delay.h
 stm32\delay.o: D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
 stm32\delay.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 stm32\delay.o: ../Core/Inc/stm32f4xx_hal_conf.h

@@ -1,7 +1,7 @@
 #include "dma.h"
 
 DMA_HandleTypeDef  g_dma_handle;                  /* DMA句柄 */
-extern UART_HandleTypeDef g_uart1_handle;         /* UART句柄 */
+extern UART_HandleTypeDef huart1;         /* UART句柄 */
 
 /**
  * @brief       串口TX DMA初始化函数
@@ -22,7 +22,7 @@ void dma_init(DMA_Stream_TypeDef *dma_stream_handle, uint32_t ch)
         __HAL_RCC_DMA1_CLK_ENABLE();                        /* DMA1时钟使能 */
     }
 
-    __HAL_LINKDMA(&g_uart1_handle, hdmatx, g_dma_handle);   /* 将DMA与USART1联系起来(发送DMA) */
+    __HAL_LINKDMA(&huart1, hdmatx, g_dma_handle);   /* 将DMA与USART1联系起来(发送DMA) */
 
     /* Tx DMA配置 */
     g_dma_handle.Instance = dma_stream_handle;                    /* 数据流选择 */

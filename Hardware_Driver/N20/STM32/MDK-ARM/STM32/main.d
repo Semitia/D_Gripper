@@ -50,6 +50,6 @@ stm32\main.o: ../Core/Inc/adc.h
 stm32\main.o: ../Core/Inc/tim.h
 stm32\main.o: ../Core/Inc/usart.h
 stm32\main.o: D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
-stm32\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
-stm32\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 stm32\main.o: ../Core/Inc/gpio.h
+stm32\main.o: ../Core/Inc/delay.h
+stm32\main.o: ..\Drivers\BSP\dma.h

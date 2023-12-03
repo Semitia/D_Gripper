@@ -39,14 +39,14 @@ void USART_RX_test(void){
 }
 
 void USART1_dmaTX_test(void) {
-    static uint8_t string_to_send[] = "Hello FreeRTOSHello FreeRTOSHello FreeRTOSHello FreeRTOSHello FreeRTOSHello FreeRTOSHello FreeRTOS\r\n";
+  static uint8_t string_to_send[] = "Hello FreeRTOSHello FreeRTOSHello FreeRTOSHello FreeRTOSHello FreeRTOSHello FreeRTOSHello FreeRTOS\r\n";
 	while(1){
-    HAL_UART_Transmit_DMA(&g_uart1_handle, string_to_send, sizeof(string_to_send));
+    HAL_UART_Transmit_DMA(&huart1, string_to_send, sizeof(string_to_send));
     while(1) {
         if (__HAL_DMA_GET_FLAG(&g_dma_handle, DMA_FLAG_TCIF3_7))        /*等待传输完成*/
         {
             __HAL_DMA_CLEAR_FLAG(&g_dma_handle, DMA_FLAG_TCIF3_7);      /*清除传输完成标志*/
-            HAL_UART_DMAStop(&g_uart1_handle);                          /*传输完毕关闭DMA*/
+            HAL_UART_DMAStop(&huart1);                          /*传输完毕关闭DMA*/
             break;
         }
     }

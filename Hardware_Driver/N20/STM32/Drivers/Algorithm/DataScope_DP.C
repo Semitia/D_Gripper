@@ -76,12 +76,12 @@ unsigned char DataScope_Data_Generate(unsigned char Channel_Number)
 
 void DataScope_DMA_Send(unsigned char channel_nums) {
 	unsigned char count = DataScope_Data_Generate(channel_nums);
-	HAL_UART_Transmit_DMA(&g_uart1_handle, DataScope_OutPut_Buffer, count);
+	HAL_UART_Transmit_DMA(&huart1, DataScope_OutPut_Buffer, count);
 	while(1) {
         if (__HAL_DMA_GET_FLAG(&g_dma_handle, DMA_FLAG_TCIF3_7))        /*等待传输完成*/
         {
             __HAL_DMA_CLEAR_FLAG(&g_dma_handle, DMA_FLAG_TCIF3_7);      /*清除传输完成标志*/
-            HAL_UART_DMAStop(&g_uart1_handle);                          /*传输完毕关闭DMA*/
+            HAL_UART_DMAStop(&huart1);                          /*传输完毕关闭DMA*/
             break;
         }
     }

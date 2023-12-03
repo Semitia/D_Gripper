@@ -48,12 +48,9 @@ stm32\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis
 stm32\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 stm32\freertos.o: ../Core/Inc/usart.h
 stm32\freertos.o: D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
-stm32\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
-stm32\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
-stm32\freertos.o: ..\Drivers\BSP\delay.h
+stm32\freertos.o: ../Core/Inc/delay.h
 stm32\freertos.o: D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
 stm32\freertos.o: D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\Bin\..\include\math.h
-stm32\freertos.o: ..\Drivers\Algorithm\test.h
 stm32\freertos.o: ../Core/Inc/TIM.h
 stm32\freertos.o: ..\Drivers\BSP\dma.h
 stm32\freertos.o: ..\Drivers\Algorithm\DataScope_DP.h

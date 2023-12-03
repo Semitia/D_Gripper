@@ -7,7 +7,6 @@
 #include "delay.h"
 #include "stdlib.h"
 #include <math.h>
-#include "test.h"
 #include "TIM.h"
 #include "dma.h"
 #include "DataScope_DP.h"
@@ -51,8 +50,6 @@ void MX_FREERTOS_Init(void) {
  */
 void start_task(void *pvParameters)
 {
-  usart_mutex = xSemaphoreCreateMutex();
-
   taskENTER_CRITICAL();           /* 进入临界区 */
   /* 创建任务1 */
   xTaskCreate((TaskFunction_t )info_Task,
@@ -68,13 +65,6 @@ void start_task(void *pvParameters)
               (void*          )NULL,
               (UBaseType_t    )TASK2_PRIO,
               (TaskHandle_t*  )&Task2Task_Handler);
-  /* 创建任务3 */
-  /*xTaskCreate((TaskFunction_t )FOC_Task,
-              (const char*    )"FOCTask",
-              (uint16_t       )TASK3_STK_SIZE,
-              (void*          )NULL,
-              (UBaseType_t    )TASK3_PRIO,
-              (TaskHandle_t*  )&Task3Task_Handler);*/
               
   vTaskDelete(StartTask_Handler); /* 删除开始任务 */
   taskEXIT_CRITICAL();            /* 退出临界区 */
@@ -88,41 +78,35 @@ void info_Task(void *argument)
     osDelay(1000);
 		HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_SET);
 		osDelay(1000);
-    //printf("elec_angle: %.2f, velocity: %.2f\r\n", electricalAngle(&M0_encoder), getVelocity(&M0_encoder));
-    // // 调用vTaskList()函数，获取所有任务的基本信息，并存入pcWriteBuffer数组
-    //   vTaskList(pcWriteBuffer);
-
-    //   // 打印pcWriteBuffer数组的内容
-    //   printf("Name\tState\tPriority\tRemainStack\tSequence\r\n");
-    //   printf("%s\r\n", pcWriteBuffer);
-
-    //   // 调用uxTaskGetStackHighWaterMark()函数，获取任务1和任务2的最小剩余栈空间，并打印出来
-    //   //printf("Task 1 minimum remaining stack: %d bytes\r\n", uxTaskGetStackHighWaterMark(xTask1Handle));
-    //   //printf("Task 2 minimum remaining stack: %d bytes\r\n", uxTaskGetStackHighWaterMark(xTask2Handle));
-
-    //   // 调用vTaskGetRunTimeStats()函数，获取所有任务的运行信息，并存入pcWriteBuffer数组
-    //   vTaskGetRunTimeStats(pcWriteBuffer);
-
-    //   // 打印pcWriteBuffer数组的内容
-    //   printf("Name\tRunCounts\tUsingRate\r\n");
-    //   printf("%s\r\n", pcWriteBuffer);
   }
 }
 
 
 void CMD_Task(void *argument)
 {
-  //DataScope test
-  double j=0;
-  while(1)	
-	{
-			j+=0.1;
-			if(j>3.14)  j=-3.14; 
-			DataScope_Get_Channel_Data(10*j, 1 );
-			DataScope_Get_Channel_Data(10*j, 2 );
-			DataScope_Get_Channel_Data(2*j, 3 );
-			DataScope_DMA_Send(3);
-			delay_ms(50); //20HZ 
-	} 
+  // // DataScope test
+  // double j=0;
+  // while(1)	
+	// {
+	// 		j+=0.1;
+	// 		if(j>3.14)  j=-3.14; 
+	// 		DataScope_Get_Channel_Data(10*j, 1 );
+	// 		DataScope_Get_Channel_Data(10*j, 2 );
+	// 		DataScope_Get_Channel_Data(2*j, 3 );
+	// 		DataScope_DMA_Send(3);
+	// 		delay_ms(50); //20HZ 
+	// } 
+
+  while(1) {
+    if(g_usart_rx_sta & 0x8000) {
+      switch(g_usart_rx_buf[0]) {
+        case 0x00:
+          break;
+        default:
+          break;
+      }
+      g_usart_rx_sta = 0;
+    }
+  }
 
 }

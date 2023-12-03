@@ -39,7 +39,7 @@ stm32\test.o: ../Drivers/CMSIS/Include/core_cm4.h
 stm32\test.o: ../Core/Inc/TIM.h
 stm32\test.o: ../Core/Inc/usart.h
 stm32\test.o: D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
-stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+stm32\test.o: D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
 stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 stm32\test.o: ../Core/Inc/FreeRTOSConfig.h
 stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
@@ -47,10 +47,8 @@ stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
 stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
 stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
-stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
-stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-stm32\test.o: D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
-stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+stm32\test.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 stm32\test.o: ..\Drivers\BSP\dma.h

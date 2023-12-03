@@ -40,10 +40,8 @@
 "stm32\cmsis_os2.o"
 "stm32\heap_4.o"
 "stm32\port.o"
-"stm32\test.o"
-"stm32\pid.o"
+"stm32\dma.o"
 "stm32\datascope_dp.o"
-"stm32\dma_1.o"
 --strict --scatter "STM32\STM32.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

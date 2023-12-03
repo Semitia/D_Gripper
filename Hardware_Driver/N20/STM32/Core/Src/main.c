@@ -1,39 +1,14 @@
-/* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2023 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
 #include "adc.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
+#include "delay.h"
+#include "dma.h"
 
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
-/* USER CODE BEGIN PFP */
-
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
@@ -41,61 +16,25 @@ void MX_FREERTOS_Init(void);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
+	delay_init(16);
   MX_GPIO_Init();
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_TIM2_Init();
-  MX_TIM3_Init();
+  MX_TIM3_Init(); 
   MX_TIM4_Init();
   MX_TIM5_Init();
-  usart_init(115200);
-  /* USER CODE BEGIN 2 */
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
-	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
-  /* USER CODE END 2 */
-
-  /* Init scheduler */
-  osKernelInitialize();  /* Call init function for freertos objects (in freertos.c) */
+  MX_USART1_UART_Init();
+  dma_init(DMA2_Stream7, DMA_CHANNEL_4);
+  osKernelInitialize();  
+	
   MX_FREERTOS_Init();
-
-  /* Start scheduler */
   osKernelStart();
-
-  /* We should never get here as control is now taken by the scheduler */
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
   }
-  /* USER CODE END 3 */
 }
 
 /**
@@ -194,9 +133,6 @@ void Error_Handler(void)
   */
 void assert_failed(uint8_t *file, uint32_t line)
 {
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
+	
 }
 #endif /* USE_FULL_ASSERT */
