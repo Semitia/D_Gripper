@@ -69,15 +69,24 @@ void start_task(void *pvParameters)
   vTaskDelete(StartTask_Handler); /* 删除开始任务 */
   taskEXIT_CRITICAL();            /* 退出临界区 */
 }
+
+int cnt = 0, dir=0;
 void info_Task(void *argument)
 {
-  //char pcWriteBuffer[1024];
-  while(1)
-  {
-		HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_RESET);
-    osDelay(1000);
-		HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_SET);
-		osDelay(1000);
+  // while(1)
+  // {
+	// 	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_RESET);
+  //   osDelay(1000);
+	// 	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_SET);
+	// 	osDelay(1000);
+  // }
+
+  // Encoder check
+  while(1) {
+    // TIM3
+    cnt = __HAL_TIM_GET_COUNTER(&htim3);
+    dir = __HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3);
+    osDelay(500);
   }
 }
 
