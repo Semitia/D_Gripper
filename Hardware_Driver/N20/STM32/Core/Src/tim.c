@@ -191,9 +191,9 @@ void MX_TIM3_Init(void)
   {
     Error_Handler();
   }
-  HAL_TIM_Encoder_MspInit(&htim3);
+  //HAL_TIM_Encoder_MspInit(&htim3);
 
-  __HAL_TIM_SET_COUNTER(&htim3, 0);               /* 初始化编码器的计数值为0 */
+  //__HAL_TIM_SET_COUNTER(&htim3, 0);               /* 初始化编码器的计数值为0 */
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);														/* 定时器，启动！*/
 }
 
@@ -324,14 +324,11 @@ void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* tim_encoderHandle)
     */
     GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF2_TIM3;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN TIM3_MspInit 1 */
-
-  /* USER CODE END TIM3_MspInit 1 */
   }
   else if(tim_encoderHandle->Instance==TIM4)
   {
