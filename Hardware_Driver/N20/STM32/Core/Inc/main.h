@@ -27,8 +27,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
-#include "core_cm4.h"
+#include "sys.h"
 
 void Error_Handler(void);
 

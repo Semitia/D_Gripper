@@ -1,12 +1,5 @@
-#include "FreeRTOS.h"
-#include "task.h"
-#include "main.h"
-#include "cmsis_os.h"
+#include "sys.h"
 #include "usart.h"
-#include "stdio.h"
-#include "delay.h"
-#include "stdlib.h"
-#include <math.h>
 #include "TIM.h"
 #include "dma.h"
 #include "DataScope_DP.h"
