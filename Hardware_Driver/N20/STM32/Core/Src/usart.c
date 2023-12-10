@@ -77,7 +77,7 @@ void MX_USART1_UART_Init(void)
     huart1.Init.OverSampling = UART_OVERSAMPLING_16;
     if (HAL_UART_Init(&huart1) != HAL_OK)
     {
-    Error_Handler();
+			Error_Handler();
 }
 	/* 该函数会开启接收中断：标志位UART_IT_RXNE，并且设置接收缓冲以及接收缓冲接收最大数据量 */
 	HAL_UART_Receive_IT(&huart1, (uint8_t *)g_rx_buffer, RXBUFFERSIZE);

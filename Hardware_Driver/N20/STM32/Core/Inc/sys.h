@@ -19,4 +19,7 @@
 /* my lib */
 #include "delay.h"
 
+void Error_Handler(void);
+
 #endif // __SYS_H__
+

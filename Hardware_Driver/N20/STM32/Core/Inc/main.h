@@ -29,9 +29,6 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "sys.h"
 
-void Error_Handler(void);
-
-
 
 #ifdef __cplusplus
 }
