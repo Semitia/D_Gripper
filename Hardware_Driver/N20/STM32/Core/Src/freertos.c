@@ -2,6 +2,7 @@
 #include "usart.h"
 #include "TIM.h"
 #include "dma.h"
+#include "N20.h"
 #include "DataScope_DP.h"
 
 uint8_t USART1_BUF[] = "Hello FreeRTOS\r\n";
@@ -63,9 +64,10 @@ void start_task(void *pvParameters)
   taskEXIT_CRITICAL();            /* ÍË³öÁÙ½çÇø */
 }
 
-int cnt = 0, dir=0;
+N20_t n20[3];
 void info_Task(void *argument)
 {
+	
   // while(1)
   // {
 	// 	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_RESET);
@@ -77,12 +79,11 @@ void info_Task(void *argument)
   // Encoder check
   while(1) {
     // TIM3
-    cnt = __HAL_TIM_GET_COUNTER(&htim3);
-    dir = __HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3);
+	
     osDelay(500);
   }
-}
 
+}
 
 void CMD_Task(void *argument)
 {

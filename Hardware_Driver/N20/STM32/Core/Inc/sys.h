@@ -19,6 +19,10 @@
 /* my lib */
 #include "delay.h"
 
+#define RTOS_FREC configTICK_RATE_HZ
+#define FRE_1MS RTOS_FREC/1000
+#define FRE_10MS RTOS_FREC/100
+
 void Error_Handler(void);
 
 #endif // __SYS_H__

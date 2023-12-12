@@ -48,7 +48,7 @@ defineTaskLoop(info_Task){
   static bool LED_state = 1;
   while(1){
     //print angle
-    // Serial.print("angle: ");
+    Serial.print("angle: \r\n");
     // for(int i=0;i<3;i++){
     //   Serial.print(AS[i].updateAngle(analogRead(ADC_pin[i])));
     //   Serial.print(" ");
@@ -105,6 +105,7 @@ defineTaskLoop(motor3_Task) {
 void loop() {
   // if(ctrl_mode) set_speed(freq,dir);
   // else set_position(target_pos);
+  Serial.print("loop \r\n");
   sleep(1000);
 }
 

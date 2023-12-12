@@ -55,4 +55,7 @@ stm32\freertos.o: ../Core/Inc/usart.h
 stm32\freertos.o: ../Core/Inc/TIM.h
 stm32\freertos.o: ../Core/Inc/main.h
 stm32\freertos.o: ..\Drivers\BSP\dma.h
+stm32\freertos.o: ..\Drivers\Software\N20.h
+stm32\freertos.o: ..\Drivers\Algorithm\PID.h
+stm32\freertos.o: ..\Drivers\Algorithm\filters.h
 stm32\freertos.o: ..\Drivers\Algorithm\DataScope_DP.h
