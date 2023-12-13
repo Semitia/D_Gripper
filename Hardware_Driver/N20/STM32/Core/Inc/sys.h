@@ -23,6 +23,10 @@
 #define FRE_1MS RTOS_FREC/1000
 #define FRE_10MS RTOS_FREC/100
 
+#ifndef PI 
+#define PI 3.14159265358979323846f
+#endif
+
 //N20电机资源分配
 #define N0_ENC_TIM &htim3
 #define N0_PWM_TIM &htim2

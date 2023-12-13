@@ -105,7 +105,7 @@ void info_Task(void *argument)
     setPWM(&n20[0]);
     setPWM(&n20[1]);
     setPWM(&n20[2]);
-    osDelay(500);
+    osDelay(50);
   }
 
 }

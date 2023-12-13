@@ -10,7 +10,8 @@
 void initN20(N20_t *n20, uint8_t id) {
     n20->id = id;
     n20->arr = __HAL_TIM_GET_AUTORELOAD(n20->htim_PWM);
-    n20->enc_spd_ratio = 1/(ENCODER_PPR*REDUCTION_RATIO*2);
+    n20->enc_spd_ratio = (float)2 * PI/(ENCODER_PPR*REDUCTION_RATIO*4);
+    n20->last_time = xTaskGetTickCount();
     lowPassInit(&n20->SpdLP, LP_K);
     n20->SpdPID.Kp = 0.1;
     n20->SpdPID.Ki = 0.0;
@@ -20,19 +21,20 @@ void initN20(N20_t *n20, uint8_t id) {
     return;
 }
 
+float dx,dt;
+TickType_t now_time;
 void updateN20(N20_t *n20) {
-    static TickType_t last_time = 0;
-    TickType_t now_time = xTaskGetTickCount();
-
+    now_time = xTaskGetTickCount();
     int cnt = __HAL_TIM_GET_COUNTER(n20->htim_ENC);
-    float dx = (float)(cnt * n20->enc_spd_ratio);
+    dx = (float)(cnt * n20->enc_spd_ratio);
+    dt = (float)(now_time - n20->last_time) / RTOS_FREC;
     n20->encoder = (int16_t)cnt;
     n20->pos += dx;
     n20->spd_last = n20->spd;
-    n20->spd = dx / (now_time - last_time) * RTOS_FREC;
+    n20->spd = dx / dt;
     __HAL_TIM_SET_COUNTER(n20->htim_ENC, 0);       //reset count
 
-    last_time = now_time;
+    n20->last_time = now_time;
     return;
 }
 

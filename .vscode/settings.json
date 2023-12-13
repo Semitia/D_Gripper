@@ -12,6 +12,8 @@
         "stdio.h": "c",
         "n20.h": "c",
         "pid.h": "c",
-        "filters.h": "c"
+        "filters.h": "c",
+        "task.h": "c",
+        "math.h": "c"
     }
 }

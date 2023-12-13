@@ -14,7 +14,8 @@ typedef struct __N20_t {
     uint8_t id;
     int16_t encoder;
     TIM_HandleTypeDef *htim_ENC;
-    
+    TickType_t last_time;
+
     TIM_HandleTypeDef *htim_PWM;
     uint16_t arr;           //PWM TIM 自动重装值
     uint32_t channel[2];    //定时器通道
