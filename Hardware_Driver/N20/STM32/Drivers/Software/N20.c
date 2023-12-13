@@ -20,14 +20,12 @@ void initN20(N20_t *n20, uint8_t id) {
     return;
 }
 
-int cnt ;
 void updateN20(N20_t *n20) {
     static TickType_t last_time = 0;
     TickType_t now_time = xTaskGetTickCount();
 
-    cnt = __HAL_TIM_GET_COUNTER(n20->htim_ENC);
-    //int dir = __HAL_TIM_IS_TIM_COUNTING_DOWN(n20->htim);
-    float dx = (float)(n20->encoder * n20->enc_spd_ratio);
+    int cnt = __HAL_TIM_GET_COUNTER(n20->htim_ENC);
+    float dx = (float)(cnt * n20->enc_spd_ratio);
     n20->encoder = (int16_t)cnt;
     n20->pos += dx;
     n20->spd_last = n20->spd;

@@ -65,7 +65,7 @@ void start_task(void *pvParameters)
 }
 
 N20_t n20[3];
-int ccnt=0;
+int ccnt=0,ccnt1=0,ccnt2=0;
 void info_Task(void *argument)
 {  
   n20[0].htim_ENC = N0_ENC_TIM;
@@ -73,6 +73,16 @@ void info_Task(void *argument)
   n20[0].channel[0] = N0_PWM_CHANNEL1;
   n20[0].channel[1] = N0_PWM_CHANNEL2;
 	initN20(&n20[0], 0);
+  n20[1].htim_ENC = N1_ENC_TIM;
+  n20[1].htim_PWM = N1_PWM_TIM;
+  n20[1].channel[0] = N1_PWM_CHANNEL1;
+  n20[1].channel[1] = N1_PWM_CHANNEL2;
+  initN20(&n20[1], 1);
+  n20[2].htim_ENC = N2_ENC_TIM;
+  n20[2].htim_PWM = N2_PWM_TIM;
+  n20[2].channel[0] = N2_PWM_CHANNEL1;
+  n20[2].channel[1] = N2_PWM_CHANNEL2;
+  initN20(&n20[2], 2);
 
   // while(1)
   // {
@@ -84,9 +94,17 @@ void info_Task(void *argument)
 
   while(1) {
 		ccnt = __HAL_TIM_GET_COUNTER(&htim3);
+    ccnt1 = __HAL_TIM_GET_COUNTER(&htim4);
+    ccnt2 = __HAL_TIM_GET_COUNTER(&htim5);
     updateN20(&n20[0]);
+    updateN20(&n20[1]);
+    updateN20(&n20[2]);
     n20[0].output = 0.5;
+    n20[1].output = 0.5;
+    n20[2].output = 0.5;
     setPWM(&n20[0]);
+    setPWM(&n20[1]);
+    setPWM(&n20[2]);
     osDelay(500);
   }
 
