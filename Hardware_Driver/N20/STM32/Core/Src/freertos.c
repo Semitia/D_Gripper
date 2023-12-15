@@ -3,6 +3,7 @@
 #include "TIM.h"
 #include "dma.h"
 #include "N20.h"
+#include "adc.h"
 #include "DataScope_DP.h"
 
 uint8_t USART1_BUF[] = "Hello FreeRTOS\r\n";
@@ -24,6 +25,12 @@ void info_Task(void *pvParameters);         /* 任务函数 */
 #define TASK2_STK_SIZE  128                 /* 任务堆栈大小 */
 TaskHandle_t            Task2Task_Handler;  /* 任务句柄 */
 void CMD_Task(void *pvParameters);          /* 任务函数 */
+
+/* TASK3--ADC 采集 配置*/
+#define TASK3_PRIO      3                   
+#define TASK3_STK_SIZE  128
+TaskHandle_t            Task3Task_Handler;
+void ADC_Task(void *pvParameters);
 
 /**
   * @brief  FreeRTOS initialization
@@ -93,21 +100,35 @@ void info_Task(void *argument)
   // }
 
   while(1) {
-		ccnt = __HAL_TIM_GET_COUNTER(&htim3);
-    ccnt1 = __HAL_TIM_GET_COUNTER(&htim4);
-    ccnt2 = __HAL_TIM_GET_COUNTER(&htim5);
+		// ccnt = __HAL_TIM_GET_COUNTER(&htim3);
+    // ccnt1 = __HAL_TIM_GET_COUNTER(&htim4);
+    // ccnt2 = __HAL_TIM_GET_COUNTER(&htim5);
     updateN20(&n20[0]);
     updateN20(&n20[1]);
     updateN20(&n20[2]);
-    n20[0].output = 0.5;
-    n20[1].output = 0.5;
-    n20[2].output = 0.5;
-    setPWM(&n20[0]);
-    setPWM(&n20[1]);
+    //setSPD(&n20[0], 3);
+    //setSPD(&n20[1], 3);
+    setSpd(&n20[2], 3);
+    // setPWM(&n20[0]);
+    // setPWM(&n20[1]);
     setPWM(&n20[2]);
-    osDelay(50);
+    osDelay(10);
   }
 
+}
+
+uint32_t adc_val[3] = {0};
+void ADC_Task(void *argument)
+{
+  int i;
+  while(1) {
+    for(i=0; i<3; i++) {
+      HAL_ADC_Start(&hadc1);
+      HAL_ADC_PollForConversion(&hadc1, 1000);
+      adc_val[i] = HAL_ADC_GetValue(&hadc1);
+      HAL_ADC_Stop(&hadc1);
+    }
+  }
 }
 
 void CMD_Task(void *argument)

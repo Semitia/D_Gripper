@@ -51,7 +51,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x64D9DE8F)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x64D9DE8F)
 I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h)(0x64D9DE8F)
 I (../Core/Inc/delay.h)(0x6575710A)
-I (../Core/Inc/adc.h)(0x6554CEFC)
+I (../Core/Inc/adc.h)(0x657C1D08)
 I (../Core/Inc/tim.h)(0x6578738A)
 I (../Core/Inc/usart.h)(0x657570AB)
 I (../Core/Inc/gpio.h)(0x6554CEFA)
@@ -108,7 +108,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x64D9DE8F)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x64D9DE8F)
 I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h)(0x64D9DE8F)
 I (../Core/Inc/delay.h)(0x6575710A)
-F (../Core/Src/freertos.c)(0x65798B61)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Drivers\BSP -I ..\Drivers\Algorithm -I ..\Drivers\Software-ID:\WORK\D-Gripper\newGitRepo\Hardware_Driver\N20\STM32\MDK-ARM\RTE-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="521" -D_RTE_ -DSTM32F401xC -DUSE_HAL_DRIVER -DSTM32F401xC-o stm32\freertos.o --omf_browse stm32\freertos.crf --depend stm32\freertos.d)
+F (../Core/Src/freertos.c)(0x657C1CD7)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Drivers\BSP -I ..\Drivers\Algorithm -I ..\Drivers\Software-ID:\WORK\D-Gripper\newGitRepo\Hardware_Driver\N20\STM32\MDK-ARM\RTE-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="521" -D_RTE_ -DSTM32F401xC -DUSE_HAL_DRIVER -DSTM32F401xC-o stm32\freertos.o --omf_browse stm32\freertos.crf --depend stm32\freertos.d)
 I (../Core/Inc/sys.h)(0x657989AB)
 I (D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
@@ -162,13 +162,13 @@ I (../Core/Inc/usart.h)(0x657570AB)
 I (../Core/Inc/TIM.h)(0x6578738A)
 I (../Core/Inc/main.h)(0x657572B3)
 I (..\Drivers\BSP\dma.h)(0x650AFEEE)
-I (..\Drivers\Software\N20.h)(0x65798C5B)
+I (..\Drivers\Software\N20.h)(0x6579A39B)
 I (..\Drivers\Algorithm\PID.h)(0x64DDD1BC)
 I (..\Drivers\Algorithm\filters.h)(0x65780C12)
+I (../Core/Inc/adc.h)(0x657C1D08)
 I (..\Drivers\Algorithm\DataScope_DP.h)(0x650B09B3)
 F (../Core/Src/adc.c)(0x655A05A6)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Drivers\BSP -I ..\Drivers\Algorithm -I ..\Drivers\Software-ID:\WORK\D-Gripper\newGitRepo\Hardware_Driver\N20\STM32\MDK-ARM\RTE-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="521" -D_RTE_ -DSTM32F401xC -DUSE_HAL_DRIVER -DSTM32F401xC-o stm32\adc.o --omf_browse stm32\adc.crf --depend stm32\adc.d)
-I (../Core/Inc/adc.h)(0x6554CEFC)
-I (../Core/Inc/main.h)(0x657572B3)
+I (../Core/Inc/adc.h)(0x657C1D08)
 I (../Core/Inc/sys.h)(0x657989AB)
 I (D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
@@ -1487,21 +1487,8 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h)(0x64D9D
 I (../Core/Inc/delay.h)(0x6575710A)
 I (..\Drivers\BSP\dma.h)(0x650AFEEE)
 I (../Core/Inc/usart.h)(0x657570AB)
-F (..\Drivers\Algorithm\PID.c)(0x64DDD1B9)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Drivers\BSP -I ..\Drivers\Algorithm -I ..\Drivers\Software-ID:\WORK\D-Gripper\newGitRepo\Hardware_Driver\N20\STM32\MDK-ARM\RTE-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="521" -D_RTE_ -DSTM32F401xC -DUSE_HAL_DRIVER -DSTM32F401xC-o stm32\pid.o --omf_browse stm32\pid.crf --depend stm32\pid.d)
-I (..\Drivers\Algorithm\PID.h)(0x64DDD1BC)
-I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x64D9DE8F)
-I (D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\include\stddef.h)(0x574E3E26)
-I (D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (../Core/Inc/FreeRTOSConfig.h)(0x6554CEFC)
-I (../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h)(0x64D9DE8F)
-I (../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h)(0x64D9DE8F)
-I (../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h)(0x64D9DE8F)
-I (../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h)(0x64D9DE8F)
-I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x64D9DE8F)
-I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x64D9DE8F)
-I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x64D9DE8F)
-F (..\Drivers\Software\N20.c)(0x65798CA4)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Drivers\BSP -I ..\Drivers\Algorithm -I ..\Drivers\Software-ID:\WORK\D-Gripper\newGitRepo\Hardware_Driver\N20\STM32\MDK-ARM\RTE-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="521" -D_RTE_ -DSTM32F401xC -DUSE_HAL_DRIVER -DSTM32F401xC-o stm32\n20.o --omf_browse stm32\n20.crf --depend stm32\n20.d)
-I (..\Drivers\Software\N20.h)(0x65798C5B)
+F (..\Drivers\Software\N20.c)(0x6579A991)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Drivers\BSP -I ..\Drivers\Algorithm -I ..\Drivers\Software-ID:\WORK\D-Gripper\newGitRepo\Hardware_Driver\N20\STM32\MDK-ARM\RTE-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="521" -D_RTE_ -DSTM32F401xC -DUSE_HAL_DRIVER -DSTM32F401xC-o stm32\n20.o --omf_browse stm32\n20.crf --depend stm32\n20.d)
+I (..\Drivers\Software\N20.h)(0x6579A39B)
 I (../Core/Inc/sys.h)(0x657989AB)
 I (D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
@@ -1553,5 +1540,18 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h)(0x64D9D
 I (../Core/Inc/delay.h)(0x6575710A)
 I (..\Drivers\Algorithm\PID.h)(0x64DDD1BC)
 I (..\Drivers\Algorithm\filters.h)(0x65780C12)
+F (..\Drivers\Algorithm\PID.c)(0x6579A7D6)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Drivers\BSP -I ..\Drivers\Algorithm -I ..\Drivers\Software-ID:\WORK\D-Gripper\newGitRepo\Hardware_Driver\N20\STM32\MDK-ARM\RTE-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="521" -D_RTE_ -DSTM32F401xC -DUSE_HAL_DRIVER -DSTM32F401xC-o stm32\pid.o --omf_browse stm32\pid.crf --depend stm32\pid.d)
+I (..\Drivers\Algorithm\PID.h)(0x64DDD1BC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x64D9DE8F)
+I (D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\include\stddef.h)(0x574E3E26)
+I (D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (../Core/Inc/FreeRTOSConfig.h)(0x6554CEFC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h)(0x64D9DE8F)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h)(0x64D9DE8F)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h)(0x64D9DE8F)
+I (../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h)(0x64D9DE8F)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x64D9DE8F)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x64D9DE8F)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x64D9DE8F)
 F (..\Drivers\Algorithm\filters.c)(0x657836E1)(--c99 -c --cpu Cortex-M4.fp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\Drivers\BSP -I ..\Drivers\Algorithm -I ..\Drivers\Software-ID:\WORK\D-Gripper\newGitRepo\Hardware_Driver\N20\STM32\MDK-ARM\RTE-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="521" -D_RTE_ -DSTM32F401xC -DUSE_HAL_DRIVER -DSTM32F401xC-o stm32\filters.o --omf_browse stm32\filters.crf --depend stm32\filters.d)
 I (..\Drivers\Algorithm\filters.h)(0x65780C12)

@@ -22,7 +22,7 @@ typedef struct __N20_t {
     float output;           //电机输出 0~1
 
     float enc_spd_ratio;    // 电机转速与编码器转速比
-    float spd, spd_tar, spd_last;
+    float spd, spd_tar, spd_last; //rad/s
     //
     float pos, pos_tar;
     PID_t SpdPID;
@@ -31,6 +31,7 @@ typedef struct __N20_t {
 
 void initN20(N20_t *n20, uint8_t id);
 void updateN20(N20_t *n20);
+void setSpd(N20_t *n20, float spd);
 void setPWM(N20_t *n20);
 #endif // __N20_H__
 

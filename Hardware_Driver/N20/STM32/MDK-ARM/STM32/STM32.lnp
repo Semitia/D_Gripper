@@ -43,8 +43,8 @@
 "stm32\port.o"
 "stm32\dma.o"
 "stm32\datascope_dp.o"
-"stm32\pid.o"
 "stm32\n20.o"
+"stm32\pid.o"
 "stm32\filters.o"
 --strict --scatter "STM32\STM32.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols

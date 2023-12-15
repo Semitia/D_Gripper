@@ -10,22 +10,24 @@
 void initN20(N20_t *n20, uint8_t id) {
     n20->id = id;
     n20->arr = __HAL_TIM_GET_AUTORELOAD(n20->htim_PWM);
-    n20->enc_spd_ratio = (float)2 * PI/(ENCODER_PPR*REDUCTION_RATIO*4);
+    n20->enc_spd_ratio = (float)2 * PI/(ENCODER_PPR*REDUCTION_RATIO*4); //双相编码器，4倍频
     n20->last_time = xTaskGetTickCount();
     lowPassInit(&n20->SpdLP, LP_K);
     n20->SpdPID.Kp = 0.1;
     n20->SpdPID.Ki = 0.0;
     n20->SpdPID.Kd = 0.0;
-    n20->SpdPID.I_limit = 0.0;
+    n20->SpdPID.I_limit = 6.0;
 
     return;
 }
 
-float dx,dt;
-TickType_t now_time;
+
+
 void updateN20(N20_t *n20) {
-    now_time = xTaskGetTickCount();
-    int cnt = __HAL_TIM_GET_COUNTER(n20->htim_ENC);
+	float dx,dt;
+	int cnt = __HAL_TIM_GET_COUNTER(n20->htim_ENC);
+    TickType_t now_time = xTaskGetTickCount();
+
     dx = (float)(cnt * n20->enc_spd_ratio);
     dt = (float)(now_time - n20->last_time) / RTOS_FREC;
     n20->encoder = (int16_t)cnt;
@@ -35,6 +37,12 @@ void updateN20(N20_t *n20) {
     __HAL_TIM_SET_COUNTER(n20->htim_ENC, 0);       //reset count
 
     n20->last_time = now_time;
+    return;
+}
+
+void setSpd(N20_t *n20, float spd) {
+    n20->spd_tar = spd;
+    n20->output = PID(&n20->SpdPID,n20->spd_tar - n20->spd);
     return;
 }
 

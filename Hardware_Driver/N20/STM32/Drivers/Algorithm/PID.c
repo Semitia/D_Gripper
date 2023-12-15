@@ -13,9 +13,10 @@ void PID_init(PID_t *pid, float Kp, float Ki, float Kd, float I_lim, float res_m
     pid->Ts = xTaskGetTickCount();
 }
 
+float dt;
 float PID(PID_t *pid, float err){
     TickType_t now_Ts = xTaskGetTickCount();
-    float dt = (float)(now_Ts - pid->Ts) / configTICK_RATE_HZ;
+    dt = (float)(now_Ts - pid->Ts) / configTICK_RATE_HZ;
     //P,I,D 计算
     float P = pid->Kp * err;
     pid->err_sum += err * dt;

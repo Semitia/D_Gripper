@@ -1,6 +1,5 @@
 stm32\adc.o: ../Core/Src/adc.c
 stm32\adc.o: ../Core/Inc/adc.h
-stm32\adc.o: ../Core/Inc/main.h
 stm32\adc.o: ../Core/Inc/sys.h
 stm32\adc.o: D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 stm32\adc.o: D:\WORK\SOFTWARES\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
