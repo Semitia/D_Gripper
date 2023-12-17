@@ -156,6 +156,7 @@ void sendMsg(uint8_t *buf, uint8_t size) {
 }
 
 uint8_t send_buf[8];
+int16_t raw_spd, raw_pos;
 float recv_spd, recv_pos;
 void CMD_Task(void *argument)
 {
@@ -178,7 +179,8 @@ void CMD_Task(void *argument)
       id = g_usart_rx_buf[0];
       switch(g_usart_rx_buf[1]) {
         case 0x01: {//速度控制指令
-          recv_spd = (float)(g_usart_rx_buf[2] << 8 | g_usart_rx_buf[3]) / SPD_SEND_SCALE;
+					raw_spd = (int16_t) (g_usart_rx_buf[2] << 8 | g_usart_rx_buf[3]);
+          recv_spd = (float)raw_spd / SPD_SEND_SCALE;
           n20[id].spd_tar = recv_spd;
           break;
         }

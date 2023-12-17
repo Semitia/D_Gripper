@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F401xC</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Drivers\BSP;..\Drivers\Algorithm</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Drivers\BSP;..\Drivers\Algorithm;..\Drivers\Software</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -438,6 +438,11 @@
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\sys.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -623,6 +628,26 @@
               <FileName>DataScope_DP.C</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\Algorithm\DataScope_DP.C</FilePath>
+            </File>
+            <File>
+              <FileName>N20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\Software\N20.c</FilePath>
+            </File>
+            <File>
+              <FileName>PID.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\Algorithm\PID.c</FilePath>
+            </File>
+            <File>
+              <FileName>filters.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\Algorithm\filters.c</FilePath>
+            </File>
+            <File>
+              <FileName>AngleSensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\Software\AngleSensor.c</FilePath>
             </File>
           </Files>
         </Group>

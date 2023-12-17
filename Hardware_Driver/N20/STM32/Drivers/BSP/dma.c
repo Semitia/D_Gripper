@@ -1,7 +1,7 @@
 #include "dma.h"
 
 DMA_HandleTypeDef  g_dma_handle;                  /* DMA¾ä±ú */
-extern UART_HandleTypeDef huart1;         /* UART¾ä±ú */
+extern UART_HandleTypeDef huart1;         				/* UART¾ä±ú */
 
 /**
  * @brief       ´®¿ÚTX DMA³õÊ¼»¯º¯Êý
