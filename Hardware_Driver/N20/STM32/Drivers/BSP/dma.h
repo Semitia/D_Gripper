@@ -4,7 +4,7 @@
 #include "main.h"
 
 extern DMA_HandleTypeDef g_dma_handle; 
-void dma_init(DMA_Stream_TypeDef *dma_stream_handle, uint32_t ch);  /* ÅäÖÃDMAx_CHx */
+void dma_init(DMA_Stream_TypeDef *dma_stream_handle, uint32_t ch);  /* ï¿½ï¿½ï¿½ï¿½DMAx_CHx */
 
 #endif
 

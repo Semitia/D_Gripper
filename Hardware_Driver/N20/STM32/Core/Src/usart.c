@@ -178,7 +178,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 void USART_UX_IRQHandler(void)
 { 
     HAL_UART_IRQHandler(&huart1);       /* 调用HAL库中断处理公用函数 */
-
 }
 
 

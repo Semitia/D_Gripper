@@ -9,6 +9,8 @@
 
 #define ENCODER_PPR 7 // 编码器基础脉冲数
 #define REDUCTION_RATIO 150 // 减速比
+#define SPD_SEND_SCALE 1000 // 电机转速发送缩放比例
+#define POS_SEND_SCALE 1000 // 电机位置发送缩放比例
 
 typedef struct __N20_t { 
     uint8_t id;

@@ -46,6 +46,7 @@
 "stm32\n20.o"
 "stm32\pid.o"
 "stm32\filters.o"
+"stm32\anglesensor.o"
 --strict --scatter "STM32\STM32.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

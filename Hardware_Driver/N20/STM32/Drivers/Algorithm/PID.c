@@ -14,15 +14,16 @@ void PID_init(PID_t *pid, float Kp, float Ki, float Kd, float I_lim, float res_m
 }
 
 float dt;
+float P,I,D;
 float PID(PID_t *pid, float err){
     TickType_t now_Ts = xTaskGetTickCount();
     dt = (float)(now_Ts - pid->Ts) / configTICK_RATE_HZ;
     //P,I,D 计算
-    float P = pid->Kp * err;
+    P = pid->Kp * err;
     pid->err_sum += err * dt;
     pid->err_sum = _constrain(pid->err_sum, -pid->I_limit, pid->I_limit);
-    float I = pid->Ki * pid->err_sum ;
-    float D = pid->Kd * (err - pid->err_prev) / dt;
+    I = pid->Ki * pid->err_sum ;
+    D = pid->Kd * (err - pid->err_prev) / dt;
     
     pid->res = P + I + D;
     pid->res = _constrain(pid->res, pid->res_min, pid->res_max);
