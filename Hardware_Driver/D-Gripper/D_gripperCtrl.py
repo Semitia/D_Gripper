@@ -1,8 +1,9 @@
 """
 
 """
+import sys
+sys.path.append('../Board/PC_program')
 
-from ServoCtrl import ServoCtrl
 from STM32Ctrl import STM32Ctrl
 import keyboard
 import time
