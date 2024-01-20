@@ -75,7 +75,6 @@ void start_task(void *pvParameters)
               (UBaseType_t    )TASK3_PRIO,
               (TaskHandle_t*  )&Task3Task_Handler);
 
-							
 	n20[0].htim_ENC = N0_ENC_TIM;
 	n20[0].htim_PWM = N0_PWM_TIM;
 	n20[0].channel[0] = N0_PWM_CHANNEL1;
@@ -96,34 +95,31 @@ void start_task(void *pvParameters)
   taskEXIT_CRITICAL();            /* 退出临界区 */
 }
 
-
 int ccnt=0,ccnt1=0,ccnt2=0;
 void N20_Task(void *argument)
 {  
-  // while(1)
-  // {
-	// 	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_RESET);
-  //   osDelay(1000);
-	// 	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_SET);
-	// 	osDelay(1000);
-  // }
+  uint8_t i;
 	osDelay(10);
   while(1) {
-		// ccnt = __HAL_TIM_GET_COUNTER(&htim3);
-    // ccnt1 = __HAL_TIM_GET_COUNTER(&htim4);
-    // ccnt2 = __HAL_TIM_GET_COUNTER(&htim5);
-    updateN20(&n20[0]);
-    updateN20(&n20[1]);
-    updateN20(&n20[2]);
-    setSpd(&n20[0], 3);
-    setSpd(&n20[1], 3);
-    setSpd(&n20[2], 3);
-    setPWM(&n20[0]);
-    setPWM(&n20[1]);
-    setPWM(&n20[2]);
+    for(i=0; i<3; i++) {
+      updateN20(&n20[i]);
+      switch(n20[i].mode) {
+        case SPD_CTRL: {
+          setSpd(&n20[i]);
+          break;
+        }
+        case POS_CTRL: {
+          setPos(&n20[i]);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+      setPWM(&n20[i]);  
+    }
     osDelay(10);
   }
-
 }
 
 uint32_t adc_val[3] = {0};
@@ -160,18 +156,6 @@ int16_t raw_spd, raw_pos;
 float recv_spd, recv_pos;
 void CMD_Task(void *argument)
 {
-  // // DataScope test
-  // double j=0;
-  // while(1)	
-	// {
-	// 		j+=0.1;
-	// 		if(j>3.14)  j=-3.14; 
-	//    DataScope_Get_Channel_Data(10*j, 1 );
-	// 		DataScope_Get_Channel_Data(10*j, 2 );
-	// 		DataScope_Get_Channel_Data(2*j, 3 );
-	// 		DataScope_DMA_Send(3);
-	// 		delay_ms(50); //20HZ 
-	// } 
   uint8_t id;
   while(1) {
 		id=0;
@@ -182,10 +166,14 @@ void CMD_Task(void *argument)
 					raw_spd = (int16_t) (g_usart_rx_buf[2] << 8 | g_usart_rx_buf[3]);
           recv_spd = (float)raw_spd / SPD_SEND_SCALE;
           n20[id].spd_tar = recv_spd;
+          n20[id].mode = SPD_CTRL;
           break;
         }
         case 0x02: {//位置控制指令
-          recv_pos = (float)(g_usart_rx_buf[2] << 8 | g_usart_rx_buf[3]) / POS_SEND_SCALE;
+          raw_pos = (int16_t) (g_usart_rx_buf[2] << 8 | g_usart_rx_buf[3]);
+          recv_pos = (float) raw_pos / POS_SEND_SCALE;
+					n20[id].pos_tar = recv_pos;
+          n20[id].mode = POS_CTRL;
           break;
         }
         case 0x03: {//向上位机发送速度

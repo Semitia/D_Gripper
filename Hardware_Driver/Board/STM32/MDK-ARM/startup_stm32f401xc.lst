@@ -740,12 +740,12 @@ ARM Macro Assembler    Page 12
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=stm32\startup_stm32f401xc.d -ostm32\startup_stm32f401xc.o -I../
-Core/Inc -ID:\WORK\D-Gripper\newGitRepo\Hardware_Driver\N20\STM32\MDK-ARM\RTE -
-ID:\WORK\SOFTWARES\MDK5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include -ID:\WORK\S
-OFTWARES\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F
-4xx\Include --predefine="__UVISION_VERSION SETA 521" --predefine="_RTE_ SETA 1"
- --predefine="STM32F401xC SETA 1" --list=startup_stm32f401xc.lst startup_stm32f
-401xc.s
+Core/Inc -ID:\WORK\D-Gripper\newGitRepo\Hardware_Driver\Board\STM32\MDK-ARM\RTE
+ -ID:\WORK\SOFTWARES\MDK5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include -ID:\WORK
+\SOFTWARES\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM3
+2F4xx\Include --predefine="__UVISION_VERSION SETA 521" --predefine="_RTE_ SETA 
+1" --predefine="STM32F401xC SETA 1" --list=startup_stm32f401xc.lst startup_stm3
+2f401xc.s
 
 
 
