@@ -79,17 +79,17 @@ void start_task(void *pvParameters)
 	n20[0].htim_PWM = N0_PWM_TIM;
 	n20[0].channel[0] = N0_PWM_CHANNEL1;
 	n20[0].channel[1] = N0_PWM_CHANNEL2;
-	initN20(&n20[0], 0);
+	initN20(&n20[0], 0, REDUCTION_RATIO_WORM, 1);
 	n20[1].htim_ENC = N1_ENC_TIM;
 	n20[1].htim_PWM = N1_PWM_TIM;
 	n20[1].channel[0] = N1_PWM_CHANNEL1;
 	n20[1].channel[1] = N1_PWM_CHANNEL2;
-	initN20(&n20[1], 1);
+	initN20(&n20[1], 1, REDUCTION_RATIO_GEAR, 1);
 	n20[2].htim_ENC = N2_ENC_TIM;
 	n20[2].htim_PWM = N2_PWM_TIM;
 	n20[2].channel[0] = N2_PWM_CHANNEL1;
 	n20[2].channel[1] = N2_PWM_CHANNEL2;
-	initN20(&n20[2], 2);
+	initN20(&n20[2], 2, REDUCTION_RATIO_GEAR, 1);
 							
   vTaskDelete(StartTask_Handler); /* 删除开始任务 */
   taskEXIT_CRITICAL();            /* 退出临界区 */
@@ -118,7 +118,7 @@ void N20_Task(void *argument)
       }
       setPWM(&n20[i]);  
     }
-    osDelay(10);
+    osDelay(5);
   }
 }
 
@@ -170,7 +170,8 @@ void CMD_Task(void *argument)
           break;
         }
         case 0x02: {//位置控制指令
-          raw_pos = (int16_t) (g_usart_rx_buf[2] << 8 | g_usart_rx_buf[3]);
+          raw_pos = (int16_t) (g_usart_rx_buf[2] << 24 | g_usart_rx_buf[3] << 16 
+															|g_usart_rx_buf[4] <<  8 | g_usart_rx_buf[5] & 0xff);
           recv_pos = (float) raw_pos / POS_SEND_SCALE;
 					n20[id].pos_tar = recv_pos;
           n20[id].mode = POS_CTRL;
@@ -187,19 +188,23 @@ void CMD_Task(void *argument)
           break;
         }
         case 0x04: {//向上位机发送位置
-          int16_t send_pos;
+          int32_t send_pos;
           send_buf[0] = id;
           send_buf[1] = 0x04;
-          send_pos = (int16_t)(n20[id].pos * POS_SEND_SCALE);
-          send_buf[2] = send_pos >> 8;
-          send_buf[3] = send_pos & 0xff;
-          sendMsg(send_buf, 4);
+          send_pos = (int32_t)(n20[id].pos * POS_SEND_SCALE);
+          send_buf[2] = (send_pos >> 24);
+          send_buf[3] = (send_pos >> 16);
+          send_buf[4] = (send_pos >>  8);
+          send_buf[5] = send_pos & 0xff;
+          sendMsg(send_buf, 6);
           break;
         }
         case 0x05:{ //停转
-          n20[0].spd_tar = 0;
-          n20[1].spd_tar = 0;
-          n20[2].spd_tar = 0;
+          int i;
+          for(i=0; i<3; i++) {
+            n20[i].mode = SPD_CTRL;
+            n20[i].spd_tar = 0;
+          }
           break;
         }
         case 0x07: {//向上位机发送角度传感器值

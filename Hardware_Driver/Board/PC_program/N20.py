@@ -8,7 +8,8 @@ date: 2023-09-04
 version: 0.0.1
 """
 import time
-import  numpy as np
+import numpy as np
+import struct
 
 SPD_SEND_SCALE = 1000                                               # 电机速度发送时的缩放比例
 POS_SEND_SCALE = 1000                                               # 电机位置发送时的缩放比例
@@ -44,9 +45,11 @@ class N20Ctrl:
         return cmd
 
     def set_position(self, target_position, ser):
-        send_pos = np.int16(target_position * POS_SEND_SCALE)
+        send_pos = np.int32(target_position * POS_SEND_SCALE)
+        # 使用struct.pack将32位整数转换为字节
+        send_pos_bytes = struct.pack('>i', send_pos)
         # 生成0x02类型的指令
-        cmd = bytearray([self.num, 0x02, send_pos >> 8, send_pos & 0xFF])
+        cmd = bytearray([self.num, 0x02]) + bytearray(send_pos_bytes)
         # 添加帧尾
         cmd = add_tail(cmd)
         # 发送指令

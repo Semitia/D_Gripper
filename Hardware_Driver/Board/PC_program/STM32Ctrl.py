@@ -12,6 +12,7 @@ from AngleSensor import AngleSensor
 import serial
 import threading
 import numpy as np
+import struct
 
 
 def add_tail(cmd):
@@ -51,7 +52,7 @@ class STM32Ctrl:
         elif self.end_flag == 1:
             if byte == 0x49:
                 self.end_flag = 0
-                # print("received ", self.rxbuf)
+                print("received ", self.rxbuf)
                 self.process_frame()
             else:
                 self.end_flag = 0
@@ -68,7 +69,9 @@ class STM32Ctrl:
             print("motor", id_num, "'s speed", speed)
         elif self.rxbuf[1] == 0x04:
             # 读取位置
-            pos = np.uint16(self.rxbuf[2] << 8 | self.rxbuf[3])/1000
+            data = self.rxbuf[2:6]
+            pos = struct.unpack('>i', data)[0]/1000
+            # pos = np.int32(self.rxbuf[2] << 24 | self.rxbuf[3] << 16 | self.rxbuf[4] << 8 | self.rxbuf[5])/1000
             self.motor[id_num].pos_update(pos)
             print("motor", id_num, "'s pos", pos)
 

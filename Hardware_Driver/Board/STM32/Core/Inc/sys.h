@@ -30,8 +30,8 @@
 //N20电机资源分配
 #define N0_ENC_TIM &htim3
 #define N0_PWM_TIM &htim2
-#define N0_PWM_CHANNEL1 TIM_CHANNEL_3
-#define N0_PWM_CHANNEL2 TIM_CHANNEL_4
+#define N0_PWM_CHANNEL1 TIM_CHANNEL_4
+#define N0_PWM_CHANNEL2 TIM_CHANNEL_3
 #define N1_ENC_TIM &htim4
 #define N1_PWM_TIM &htim2
 #define N1_PWM_CHANNEL1 TIM_CHANNEL_1
