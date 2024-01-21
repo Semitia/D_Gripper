@@ -24,8 +24,8 @@ void initN20(N20_t *n20, uint8_t id, float reduc_ratio, short polar) {
     n20->pos_nor = 0;
 
     lowPassInit(&n20->SpdLP, LP_K);
-    n20->SpdPID.Kp = 0.5;
-    n20->SpdPID.Ki = 0.0;
+    n20->SpdPID.Kp = 0.6;
+    n20->SpdPID.Ki = 0.1;
     n20->SpdPID.Kd = 0.0;
     n20->SpdPID.I_limit = 6.0;
     n20->SpdPID.res_max = 1.0;
