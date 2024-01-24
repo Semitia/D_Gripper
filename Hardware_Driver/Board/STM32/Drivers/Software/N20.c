@@ -15,7 +15,7 @@ void initN20(N20_t *n20, uint8_t id, float reduc_ratio, short polar) {
     n20->output = 0;
 		n20->output_polar = polar;
     n20->last_time = xTaskGetTickCount();
-    
+
     n20->spd = 0;
     n20->spd_tar = 0;
     n20->spd_last = 0;
