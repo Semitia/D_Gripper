@@ -1,1 +1,0 @@
-[ROS学习笔记（1）6轴机器臂的URDF文件的生成并用rviz和moveit显示 – 源码巴士 (code84.com)](https://code84.com/890208.html)
