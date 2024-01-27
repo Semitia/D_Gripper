@@ -28,8 +28,6 @@ sys.path.append("..")
 from scservo_sdk import *                      # Uses SCServo SDK library
 
 
-# class servoState:
-#     def __init__(self, pos, spd, cur):
 
 
 class DgripperCtrl:
@@ -41,7 +39,7 @@ class DgripperCtrl:
         # Feetech servo
         self.portHandler = PortHandler(servo_port)
         self.packetHandler = sms_sts(self.portHandler)
-        print("DgripperCtrl Init Complete!")
+
         # Open port
         if self.portHandler.openPort():
             print("Succeeded to open the port")
@@ -50,7 +48,6 @@ class DgripperCtrl:
             print("Press any key to terminate...")
             getch()
             quit()
-
         # Set port baudrate
         if self.portHandler.setBaudRate(servo_baud):
             print("Succeeded to change the baudrate")
@@ -59,7 +56,9 @@ class DgripperCtrl:
             print("Press any key to terminate...")
             getch()
             quit()
-
+        print("DgripperCtrl Init Complete!")
+        
+        
     def write_servo(self, servo_id, position, speed, acc):
         scs_comm_result, scs_error = self.packetHandler.WritePosEx(servo_id, position, speed, acc)
         # if scs_comm_result != COMM_SUCCESS:
@@ -82,7 +81,7 @@ class DgripperCtrl:
         if scs_error != 0:
             print(self.packetHandler.getRxPacketError(scs_error))
 
-    def run(self):
+    def key_run(self):
         while True:
             print("Press any key to continue! (or press ESC to quit!)")
             key = getch()
@@ -118,6 +117,17 @@ class DgripperCtrl:
             elif key == "l":        # n20[2] counter-clockwise
                 self.board.motor[2].set_speed(-8, self.board.ser)
                 print("n20[2] counter-clockwise")
+            elif key == "1":        # set position of motor
+                motor_id = int(input("motor id:"))
+                position_tar = input("position:")
+                self.board.motor[motor_id].set_position(position_tar, self.board.ser)
+                print("set position of motor", motor_id, "to", position_tar)
+            elif key == "2":        # read position of motor
+                motor_id = int(input("motor id:"))
+                self.board.motor[motor_id].read_position(self.board.ser)
+            elif key == "3":        # read speed of motor
+                motor_id = int(input("motor id:"))
+                self.board.motor[motor_id].read_speed(self.board.ser)
 
             elif key == " ":        # stop all
                 for i in range(3):
@@ -128,10 +138,25 @@ class DgripperCtrl:
 
             time.sleep(0.05)
 
+    def update(self):
+        for i in range(3):
+            self.board.motor[i].read_position(self.board.ser)
+        self.read_servo(0)
+        self.read_servo(1)
+
+    def manipulate(self, pose, tar_pose):
+        complete = False
+        state = 0
+        while not complete:
+            
+            self.update()
+            time.sleep(0.05)
+        
 
 SERVO_BAUDRATE              = 1000000           
 SERVO_PORTNAME              = '/dev/ttyUSB0'   
 BOARD_BAUDRATE              = 115200          
 BOARD_PORTNAME              = '/dev/ttyUSB1' 
-no1 = DgripperCtrl(SERVO_PORTNAME, SERVO_BAUDRATE, BOARD_PORTNAME, BOARD_BAUDRATE)
-no1.run()
+if __name__ == '__main__':
+    no1 = DgripperCtrl(SERVO_PORTNAME, SERVO_BAUDRATE, BOARD_PORTNAME, BOARD_BAUDRATE)
+    no1.key_run()
