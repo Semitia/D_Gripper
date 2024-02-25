@@ -42,7 +42,7 @@ class DGripper_ros(DgripperCtrl):
         # ROS
         rospy.init_node("DGripper_ros")
         # 五个电机位置信息 N20[0\1] 位移, N20[2]夹爪间距, servo[0\1] 角度 
-        self.pub = rospy.Publisher("/motors", Float32MultiArray, queue_size=10)
+        self.pub = rospy.Publisher("/motors_pos_real", Float32MultiArray, queue_size=10)
         # 左右两个摄像头的图像存储列表
         self.BUF_SIZE = 10
         self.image_left_list = []
@@ -50,7 +50,7 @@ class DGripper_ros(DgripperCtrl):
         self.image_sub_left  = rospy.Subscriber("/image_left", Image, self.image_left_callback)
         self.image_sub_right = rospy.Subscriber("/image_right", Image, self.image_right_callback)
         # 电机位置命令订阅  -  数据格式同pub_msg
-        self.motor_sub = rospy.Subscriber("/motor_pos", Float32MultiArray, self.motor_callback)
+        self.motor_sub = rospy.Subscriber("/motor_pos_tar", Float32MultiArray, self.motor_callback)
         # 位姿变换命令订阅 
         self.pose_sub = rospy.Subscriber("/pose", Pose, self.pose_callback)
         
@@ -115,8 +115,9 @@ class DGripper_ros(DgripperCtrl):
             
             self.update()
             # 电机位置信息发布
-            self.pub.publish(self.state)
-            print("one loop")
+            pub_msg = Float32MultiArray(data = self.state)
+            self.pub.publish(pub_msg)
+            # print("one loop")
             rate.sleep()
     
 

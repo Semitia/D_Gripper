@@ -28,15 +28,15 @@ sys.path.append("..")
 from scservo_sdk import *                      # Uses SCServo SDK library
 
 PI = 3.1415926536
-N20_RAD2DIS = 0.7                              # translate angle(rad) of n20 to displacement(mm) of surface
-SCREW_RAD2DIS = 0.5                            # translate screw's angle(rad) to surface distance(mm) of 2 fingers
-SERVO_VAL2ANG = 0.1                            # translate servo's angle digital value(0~4095) to actual value(+-PI)
+N20_RAD2DIS = 1.707553                         # translate angle(rad) of n20 to displacement(mm) of surface
+SCREW_RAD2DIS = 1.227948                            # translate screw's angle(rad) to surface distance(mm) of 2 fingers
+SERVO_VAL2ANG = 0.0015339807878                # translate servo's angle digital value(0~4095) to actual value(+-PI)
 # range limitation of state
-SCREW_MAX_DIS = 60
-SCREW_MIN_DIS = 0
+SCREW_MAX_DIS = 53
+SCREW_MIN_DIS = -5
 SERVO_MAX_ANG =  PI/2
 SERVO_MIN_ANG = -PI/2
-SCREW_INIT_DIS = 30
+SCREW_INIT_DIS = 26.326634    # motor pos=0 <--> dis=168.326634
 SERVO_INIT_VAL_0 = 2048
 SERVO_INIT_VAL_1 = 2048
 
