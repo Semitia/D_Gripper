@@ -5,6 +5,7 @@ import rospy
 import time
 import os
 import cv2 
+
 from cv_bridge import CvBridge 
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Pose
@@ -52,7 +53,7 @@ class DGripper_ros(DgripperCtrl):
         # 电机位置命令订阅  -  数据格式同pub_msg
         self.motor_sub = rospy.Subscriber("/motor_pos_tar", Float32MultiArray, self.motor_callback)
         # 位姿变换命令订阅 
-        self.pose_sub = rospy.Subscriber("/pose", Pose, self.pose_callback)
+        self.pose_sub = rospy.Subscriber("/pose_tar", Pose, self.pose_callback)
         
     def image_left_callback(self, msg):
         '''
@@ -94,8 +95,8 @@ class DGripper_ros(DgripperCtrl):
         电机位置命令订阅回调函数
         '''
         self.CTRL_MODE = 0
-        self.state_tar = msg.data
-        print("motor pos callback: ", self.state_tar)
+        self.state_tar = list(msg.data)
+        print("target: ", self.state_tar)
         
     def pose_callback(self, msg):
         '''
@@ -107,17 +108,19 @@ class DGripper_ros(DgripperCtrl):
     
     def run(self):
         # Create a rate object with a rate of 10Hz
-        rate = rospy.Rate(10)
+        rate = rospy.Rate(30)
         while not rospy.is_shutdown():
+            # rospy.spinOnce()
             if self.CTRL_MODE == 0:
                 self.excute_motor()
             # elif self.CTRL_MODE == 1:
             
             self.update()
             # 电机位置信息发布
+            # pub_msg_empty = Float32MultiArray(data = [] )
+            # self.pub.publish(pub_msg_empty)
             pub_msg = Float32MultiArray(data = self.state)
             self.pub.publish(pub_msg)
-            # print("one loop")
             rate.sleep()
     
 

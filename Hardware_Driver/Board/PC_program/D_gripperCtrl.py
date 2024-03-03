@@ -29,14 +29,16 @@ from scservo_sdk import *                      # Uses SCServo SDK library
 
 PI = 3.1415926536
 N20_RAD2DIS = 1.707553                         # translate angle(rad) of n20 to displacement(mm) of surface
-SCREW_RAD2DIS = 1.227948                       # translate screw's angle(rad) to surface distance(mm) of 2 fingers
+SCREW_RAD2DIS = 1.227948                            # translate screw's angle(rad) to surface distance(mm) of 2 fingers
 SERVO_VAL2ANG = 0.0015339807878                # translate servo's angle digital value(0~4095) to actual value(+-PI)
 # range limitation of state
+ROLL_MAX_SPD = 4
 SCREW_MAX_DIS = 53
-SCREW_MIN_DIS = -5
-SERVO_MAX_ANG =  PI/2
-SERVO_MIN_ANG = -PI/2
-SCREW_INIT_DIS = 26.326634    # motor pos=0 <--> dis=168.326634
+SCREW_MAX_SPD = 10
+SCREW_MIN_DIS = -20
+SERVO_MAX_ANG =  PI
+SERVO_MIN_ANG = -PI
+SCREW_INIT_DIS = 32.8      # motor pos=0 <--> dis=122.8mm, assume that the thickness of sensor is 45mm, init_dis = 122.8-45x2=32.8mm  
 SERVO_INIT_VAL_0 = 2048
 SERVO_INIT_VAL_1 = 2048
 
@@ -58,7 +60,7 @@ class DgripperCtrl:
         self.servo_delta_pos = 60                       # the delta position after pressing one time
         self.portHandler = PortHandler(servo_port)
         self.packetHandler = sms_sts(self.portHandler)
-        print("DgripperCtrl Init Complete!")
+
         # Open port
         if self.portHandler.openPort():
             print("Succeeded to open the port")
@@ -80,7 +82,7 @@ class DgripperCtrl:
         self.servo_pos[1] = self.read_servo(1)
         # state: surface displacement(mm) of 2 sensors & distance(mm) of 2 fingers & 2 servo's target angle(rad); 
         self.state = [0, 0, 0, 0, 0]
-        self.state_tar = [0, 0, 0, 0, 0]
+        self.state_tar = [0, 0, 50, 0, 0, 0, 0, 0]
 
     def write_servo(self, servo_id, position, speed, acc):
         scs_comm_result, scs_error = self.packetHandler.WritePosEx(servo_id, position, speed, acc)
@@ -96,13 +98,12 @@ class DgripperCtrl:
         # elif scs_error != 0:
         #     print(self.packetHandler.getRxPacketError(scs_error))
         moving, scs_comm_result, scs_error = self.packetHandler.ReadMoving(servo_id)
-        if scs_comm_result != COMM_SUCCESS:
-            print(self.packetHandler.getTxRxResult(scs_comm_result))
-        else:
-
-            print("[ID:%03d] PresPos:%d PresSpd:%d" % (servo_id, scs_present_position, scs_present_speed))
-        if scs_error != 0:
-            print(self.packetHandler.getRxPacketError(scs_error))
+        # if scs_comm_result != COMM_SUCCESS:
+        #     print(self.packetHandler.getTxRxResult(scs_comm_result))
+        # else:
+        #     print("[ID:%03d] PresPos:%d PresSpd:%d" % (servo_id, scs_present_position, scs_present_speed))
+        # if scs_error != 0:
+        #     print(self.packetHandler.getRxPacketError(scs_error))
         return scs_present_position
 
     def key_run(self):
@@ -124,19 +125,19 @@ class DgripperCtrl:
                 self.write_servo(1, self.servo_pos[1] - self.servo_delta_pos, 500, 50)
                 print("servo 1 counter-clockwise")
             elif key == "u":        # n20[0] clockwise
-                self.board.motor[0].set_speed(2, self.board.ser)
+                self.board.motor[0].set_speed(3, self.board.ser)
                 print("n20[0] clockwise")
             elif key == "j":        # n20[0] counter-clockwise
-                self.board.motor[0].set_speed(-2, self.board.ser)
+                self.board.motor[0].set_speed(-3, self.board.ser)
                 print("n20[0] counter-clockwise")
             elif key == "i":        # n20[1] clockwise
-                self.board.motor[1].set_speed(2, self.board.ser)
+                self.board.motor[1].set_speed(3, self.board.ser)
                 print("n20[1] clockwise")
             elif key == "k":        # n20[1] counter-clockwise
-                self.board.motor[1].set_speed(-2, self.board.ser)
+                self.board.motor[1].set_speed(-3, self.board.ser)
                 print("n20[1] counter-clockwise")
             elif key == "o":        # n20[2] clockwise
-                self.board.motor[2].set_speed(10, self.board.ser) # 
+                self.board.motor[2].set_speed(10, self.board.ser) 
                 print("n20[2] clockwise")
             elif key == "l":        # n20[2] counter-clockwise
                 self.board.motor[2].set_speed(-10, self.board.ser)
@@ -152,6 +153,8 @@ class DgripperCtrl:
             elif key == "3":        # read speed of motor
                 motor_id = int(input("motor id:"))
                 self.board.motor[motor_id].read_speed(self.board.ser)
+            elif key == "b":        # back to zero
+                self.reset_zero()
 
             elif key == " ":        # stop all
                 for i in range(3):
@@ -172,9 +175,9 @@ class DgripperCtrl:
         
         self.state[0] = self.board.motor[0].position * N20_RAD2DIS
         self.state[1] = self.board.motor[1].position * N20_RAD2DIS
-        self.state[2] = self.board.motor[2].position * SCREW_RAD2DIS
-        self.state[3] = self.servo_pos[0] * SERVO_VAL2ANG
-        self.state[4] = self.servo_pos[1] * SERVO_VAL2ANG
+        self.state[2] = self.board.motor[2].position * SCREW_RAD2DIS + SCREW_INIT_DIS
+        self.state[3] = self.servo_pos[0] * SERVO_VAL2ANG - PI
+        self.state[4] = self.servo_pos[1] * SERVO_VAL2ANG - PI
         print("state:", self.state)
 
     def excute_motor(self):
@@ -182,12 +185,20 @@ class DgripperCtrl:
         self.state_tar[2] = limit(self.state_tar[2], SCREW_MIN_DIS, SCREW_MAX_DIS)
         self.state_tar[3] = limit(self.state_tar[3], SERVO_MIN_ANG, SERVO_MAX_ANG)
         self.state_tar[4] = limit(self.state_tar[4], SERVO_MIN_ANG, SERVO_MAX_ANG)
+        self.state_tar[5] = limit(self.state_tar[5], -ROLL_MAX_SPD, ROLL_MAX_SPD)
+        self.state_tar[6] = limit(self.state_tar[6], -ROLL_MAX_SPD, ROLL_MAX_SPD)
+        self.state_tar[7] = limit(self.state_tar[7], -SCREW_MAX_SPD, SCREW_MAX_SPD)
+
         # translate state to target position, excute
-        tar_pos = [self.state_tar[0]/N20_RAD2DIS, self.state_tar[1]/N20_RAD2DIS, self.state_tar[2]/SCREW_RAD2DIS]
+        # tar_pos = [self.state_tar[0]/N20_RAD2DIS, self.state_tar[1]/N20_RAD2DIS, (self.state_tar[2]-SCREW_INIT_DIS)/SCREW_RAD2DIS]
+        # for i in range(3):
+        #     self.board.motor[i].set_position(tar_pos[i], self.board.ser)
         for i in range(3):
-            self.board.motor[i].set_position(tar_pos[i], self.board.ser)
-        self.write_servo(0, self.state_tar[3]/SERVO_VAL2ANG, 500, 50)
-        self.write_servo(1, self.state_tar[4]/SERVO_VAL2ANG, 500, 50)
+            self.board.motor[i].set_speed(self.state_tar[i+5], self.board.ser)
+        
+        servo_pos = [self.state_tar[3]/SERVO_VAL2ANG + SERVO_INIT_VAL_0, self.state_tar[4]/SERVO_VAL2ANG + SERVO_INIT_VAL_1]
+        self.write_servo(0, int(servo_pos[0]), 500, 50)
+        self.write_servo(1, int(servo_pos[1]), 500, 50)
         
     def reset_zero(self):
         '''
@@ -195,7 +206,7 @@ class DgripperCtrl:
         In order to ensure the accuracy of position control,
         gripper should be reset to zero position as long as it's powered off.
         '''
-        self.state_tar = [0, 0, SCREW_INIT_DIS, SERVO_INIT_VAL_0, SERVO_INIT_VAL_1]
+        self.state_tar = [0, 0, 50, 0, 0]
         self.excute_motor()
     
     def manipulate(self, pose, tar_pose):
@@ -205,7 +216,7 @@ class DgripperCtrl:
             
             self.update()
             time.sleep(0.05)
-        
+    
         
 SERVO_BAUDRATE              = 1000000           
 SERVO_PORTNAME              = '/dev/ttyUSB1'   
