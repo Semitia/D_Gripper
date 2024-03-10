@@ -1,2 +1,1 @@
-# D_Gripper
-A Flexible Vision-Based Tactile Gripper with Active Surface
+# D_Gripper_web
