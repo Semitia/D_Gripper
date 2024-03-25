@@ -9,7 +9,7 @@ import cv2
 from cv_bridge import CvBridge 
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Pose
-from D_gripperCtrl import DgripperCtrl
+from D_gripperCtrl_H import DgripperCtrl_H
 from std_msgs.msg import Float32MultiArray
 
 if os.name == 'nt':
@@ -29,7 +29,7 @@ else:
         return ch
     
     
-class DGripper_ros(DgripperCtrl):
+class DGripper_ros_H(DgripperCtrl_H):
     '''
     DGripper的ROS控制接口, 三种控制模式
     0 - 订阅5个目标电机位置直接来控制电机
@@ -38,7 +38,7 @@ class DGripper_ros(DgripperCtrl):
     通过publisher不断发送电机位置信息
     '''
     def __init__(self, servo_port, servo_baud, board_port, board_baud):
-        super(DGripper_ros, self).__init__(servo_port, servo_baud, board_port, board_baud)
+        super(DGripper_ros_H, self).__init__(servo_port, servo_baud, board_port, board_baud)
         self.CTRL_MODE = 0
         # ROS
         rospy.init_node("DGripper_ros")
@@ -117,18 +117,16 @@ class DGripper_ros(DgripperCtrl):
             
             self.update()
             # 电机位置信息发布
-            # pub_msg_empty = Float32MultiArray(data = [] )
-            # self.pub.publish(pub_msg_empty)
             pub_msg = Float32MultiArray(data = self.state)
             self.pub.publish(pub_msg)
             rate.sleep()
     
 
 
-SERVO_BAUDRATE              = 1000000           
+SERVO_BAUDRATE              = 115200        
 SERVO_PORTNAME              = '/dev/ttyUSB1'   
 BOARD_BAUDRATE              = 115200          
-BOARD_PORTNAME              = '/dev/ttyUSB0' 
+BOARD_PORTNAME              = '/dev/ttyUSB2' 
 if __name__ == '__main__':
-    gripper = DGripper_ros(SERVO_PORTNAME, SERVO_BAUDRATE, BOARD_PORTNAME, BOARD_BAUDRATE)
+    gripper = DGripper_ros_H(SERVO_PORTNAME, SERVO_BAUDRATE, BOARD_PORTNAME, BOARD_BAUDRATE)
     gripper.run()

@@ -7,6 +7,7 @@ from STM32Ctrl import STM32Ctrl
 import sys
 import os
 
+
 if os.name == 'nt':
     import msvcrt
     def getch():
@@ -28,17 +29,17 @@ sys.path.append("..")
 from scservo_sdk import *                      # Uses SCServo SDK library
 
 PI = 3.1415926536
-N20_RAD2DIS = 1.707553                         # translate angle(rad) of n20 to displacement(mm) of surface
-SCREW_RAD2DIS = 1.227948                            # translate screw's angle(rad) to surface distance(mm) of 2 fingers
+N20_RAD2DIS = 0.953                         # translate angle(rad) of n20 to displacement(mm) of surface
+SCREW_RAD2DIS = 1.35                            # translate screw's angle(rad) to surface distance(mm) of 2 fingers
 SERVO_VAL2ANG = 0.0015339807878                # translate servo's angle digital value(0~4095) to actual value(+-PI)
 # range limitation of state
-ROLL_MAX_SPD = 4
+ROLL_MAX_SPD = 12
 SCREW_MAX_DIS = 53
-SCREW_MAX_SPD = 10
+SCREW_MAX_SPD = 18
 SCREW_MIN_DIS = -20
 SERVO_MAX_ANG =  PI
 SERVO_MIN_ANG = -PI
-SCREW_INIT_DIS = 32.8      # motor pos=0 <--> dis=122.8mm, assume that the thickness of sensor is 45mm, init_dis = 122.8-45x2=32.8mm  
+SCREW_INIT_DIS = 18      # motor pos=0 <--> dis=122.8mm, assume that the thickness of sensor is 45mm, init_dis = 122.8-45x2=32.8mm  
 SERVO_INIT_VAL_0 = 2048
 SERVO_INIT_VAL_1 = 2048
 
@@ -48,6 +49,14 @@ def limit(val, min_val, max_val):
     elif val < min_val:
         val = min_val
     return val
+
+# calculate the distance between two state
+def cal_dis(state1, state2):
+    dis = 0
+    for i in range(3):
+        dis += (state1[i] - state2[i]) ** 2
+    dis = dis ** 0.5
+    return dis
 
 class DgripperCtrl:
     SERVO_NUM = 2
@@ -82,7 +91,7 @@ class DgripperCtrl:
         self.servo_pos[1] = self.read_servo(1)
         # state: surface displacement(mm) of 2 sensors & distance(mm) of 2 fingers & 2 servo's target angle(rad); 
         self.state = [0, 0, 0, 0, 0]
-        self.state_tar = [0, 0, 50, 0, 0, 0, 0, 0]
+        self.state_tar = [0, 0, 40, 0, 0, 0, 0, 0]
 
     def write_servo(self, servo_id, position, speed, acc):
         scs_comm_result, scs_error = self.packetHandler.WritePosEx(servo_id, position, speed, acc)
@@ -112,7 +121,7 @@ class DgripperCtrl:
             key = getch()
             if key == chr(0x1b):
                 break
-            elif key == "q":          # servo 0 clockwise
+            elif key == "q":        # servo 0 clockwise
                 self.write_servo(0, self.servo_pos[0] + self.servo_delta_pos, 500, 50)
                 print("servo 0 clockwise")
             elif key == "a":        # servo 0 counter-clockwise
@@ -150,11 +159,22 @@ class DgripperCtrl:
             elif key == "2":        # read position of motor
                 motor_id = int(input("motor id:"))
                 self.board.motor[motor_id].read_position(self.board.ser)
+                print("position of motor", motor_id, "is", self.board.motor[motor_id].position)
+
             elif key == "3":        # read speed of motor
                 motor_id = int(input("motor id:"))
                 self.board.motor[motor_id].read_speed(self.board.ser)
             elif key == "b":        # back to zero
                 self.reset_zero()
+            elif key == "p":        # set n20 pos via upper pid 
+                motor_id = int(input("motor id:"))
+                position_tar = float(input("position:"))
+                self.board.motor[motor_id].PID_ctrl.set_target(position_tar)
+                while abs(self.board.motor[motor_id].position - position_tar) > 0.1:
+                    self.board.motor[motor_id].pidLoop(self.board.ser)
+                    time.sleep(0.1)
+                self.board.motor[motor_id].stop(self.board.ser)
+                print("set position of motor", motor_id, "to", position_tar)
 
             elif key == " ":        # stop all
                 for i in range(3):
@@ -166,6 +186,7 @@ class DgripperCtrl:
             time.sleep(0.05)
             self.servo_pos[0] = self.read_servo(0)
             self.servo_pos[1] = self.read_servo(1)
+            # self.update()
 
     def update(self):
         for i in range(3):
@@ -189,25 +210,38 @@ class DgripperCtrl:
         self.state_tar[6] = limit(self.state_tar[6], -ROLL_MAX_SPD, ROLL_MAX_SPD)
         self.state_tar[7] = limit(self.state_tar[7], -SCREW_MAX_SPD, SCREW_MAX_SPD)
 
-        # translate state to target position, excute
-        # tar_pos = [self.state_tar[0]/N20_RAD2DIS, self.state_tar[1]/N20_RAD2DIS, (self.state_tar[2]-SCREW_INIT_DIS)/SCREW_RAD2DIS]
+        # translate state to target position, excute  stm32 position control
+        tar_pos = [self.state_tar[0]/N20_RAD2DIS, self.state_tar[1]/N20_RAD2DIS, (self.state_tar[2]-SCREW_INIT_DIS)/SCREW_RAD2DIS]
         # for i in range(3):
         #     self.board.motor[i].set_position(tar_pos[i], self.board.ser)
-        for i in range(3):
-            self.board.motor[i].set_speed(self.state_tar[i+5], self.board.ser)
         
+        # stm32 velcity control
+        # for i in range(3):
+        #     self.board.motor[i].set_speed(self.state_tar[i+5], self.board.ser)
+        
+        # pc position control
+        for i in range(3):
+            self.board.motor[i].pidLoop(self.board.ser)
+
         servo_pos = [self.state_tar[3]/SERVO_VAL2ANG + SERVO_INIT_VAL_0, self.state_tar[4]/SERVO_VAL2ANG + SERVO_INIT_VAL_1]
         self.write_servo(0, int(servo_pos[0]), 500, 50)
         self.write_servo(1, int(servo_pos[1]), 500, 50)
         
+
     def reset_zero(self):
         '''
         reset all motors to zero position
         In order to ensure the accuracy of position control,
         gripper should be reset to zero position as long as it's powered off.
         '''
-        self.state_tar = [0, 0, 50, 0, 0]
-        self.excute_motor()
+        self.state_tar = [0, 0, 40, 0, 0, 0, 0, 0]
+        tar_pos = [self.state_tar[0]/N20_RAD2DIS, self.state_tar[1]/N20_RAD2DIS, (self.state_tar[2]-SCREW_INIT_DIS)/SCREW_RAD2DIS]
+        for i in range(3):
+            self.board.motor[i].PID_ctrl.set_target(tar_pos[i])
+        while cal_dis(self.state, self.state_tar) > 0.1:
+            self.excute_motor()
+            self.update()
+            time.sleep(0.1)
     
     def manipulate(self, pose, tar_pose):
         complete = False
@@ -216,12 +250,11 @@ class DgripperCtrl:
             
             self.update()
             time.sleep(0.05)
-    
-        
-SERVO_BAUDRATE              = 1000000           
-SERVO_PORTNAME              = '/dev/ttyUSB1'   
-BOARD_BAUDRATE              = 115200          
-BOARD_PORTNAME              = '/dev/ttyUSB0' 
+SERVO_BAUDRATE              = 1000000            
+SERVO_PORTNAME              = '/dev/ttyUSB0'
+BOARD_BAUDRATE              = 115200    
+BOARD_PORTNAME              = '/dev/ttyUSB1' 
+
 if __name__ == '__main__':
     no1 = DgripperCtrl(SERVO_PORTNAME, SERVO_BAUDRATE, BOARD_PORTNAME, BOARD_BAUDRATE)
     no1.key_run()

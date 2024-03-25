@@ -10,7 +10,7 @@ Version: 0.0.1
 import time
 import serial
 import threading
-import keyboard
+# import keyboard
 
 def range_limit(num, my_min, my_max):
     """
@@ -285,35 +285,34 @@ class ServoCtrl:
         self.move(servo_id, tem_pos, 0)
 
 
-if __name__ == "__main__":
-    servo = ServoCtrl("COM6", 115200, 2)
-    time.sleep(1)
-    while True:
-        if keyboard.is_pressed('q'):
-            break
+# if __name__ == "__main__":
+#     servo = ServoCtrl("COM6", 115200, 2)
+#     time.sleep(1)
+#     while True:
+#         if keyboard.is_pressed('q'):
+#             break
 
-        elif keyboard.is_pressed('w'):
-            servo.step_forward(0)
-            print("w")
+#         elif keyboard.is_pressed('w'):
+#             servo.step_forward(0)
+#             print("w")
 
-        elif keyboard.is_pressed('e'):
-            servo.step_forward(1)
-            print("e")
+#         elif keyboard.is_pressed('e'):
+#             servo.step_forward(1)
+#             print("e")
 
-        elif keyboard.is_pressed('s'):  # 夹爪0闭合
-            print("s")
-            servo.step_backward(0)
+#         elif keyboard.is_pressed('s'):  # 夹爪0闭合
+#             print("s")
+#             servo.step_backward(0)
 
-        elif keyboard.is_pressed('d'):  # 夹爪1闭合
-            print("d")
-            servo.step_backward(1)
+#         elif keyboard.is_pressed('d'):  # 夹爪1闭合
+#             print("d")
+#             servo.step_backward(1)
 
-        servo.update()
-        time.sleep(0.01)
+#         servo.update()
+#         time.sleep(0.01)
 
-    servo.ser.close()
-    print("serial port closed")
-    print("program exit")
-    exit(0)
-
+#     servo.ser.close()
+#     print("serial port closed")
+#     print("program exit")
+#     exit(0)
 

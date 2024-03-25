@@ -9,7 +9,7 @@ import cv2
 from cv_bridge import CvBridge 
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Pose
-from D_gripperCtrl import DgripperCtrl
+from D_gripperCtrl import *
 from std_msgs.msg import Float32MultiArray
 
 if os.name == 'nt':
@@ -96,6 +96,9 @@ class DGripper_ros(DgripperCtrl):
         '''
         self.CTRL_MODE = 0
         self.state_tar = list(msg.data)
+        tar_pos = [self.state_tar[0]/N20_RAD2DIS, self.state_tar[1]/N20_RAD2DIS, (self.state_tar[2]-SCREW_INIT_DIS)/SCREW_RAD2DIS]
+        for i in range(3):
+            self.board.motor[i].PID_ctrl.set_target(tar_pos[i])
         print("target: ", self.state_tar)
         
     def pose_callback(self, msg):
@@ -126,9 +129,9 @@ class DGripper_ros(DgripperCtrl):
 
 
 SERVO_BAUDRATE              = 1000000           
-SERVO_PORTNAME              = '/dev/ttyUSB1'   
+SERVO_PORTNAME              = '/dev/ttyUSB2'   
 BOARD_BAUDRATE              = 115200          
-BOARD_PORTNAME              = '/dev/ttyUSB0' 
+BOARD_PORTNAME              = '/dev/ttyUSB3' 
 if __name__ == '__main__':
     gripper = DGripper_ros(SERVO_PORTNAME, SERVO_BAUDRATE, BOARD_PORTNAME, BOARD_BAUDRATE)
     gripper.run()
