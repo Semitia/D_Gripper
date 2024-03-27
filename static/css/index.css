@@ -155,3 +155,8 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+video {
+  border-radius: 20px; /* 设置圆角的大小 */
+  overflow: hidden; /* 确保圆角效果被正确应用 */
+}
